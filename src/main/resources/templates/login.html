@@ -1,0 +1,70 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>漱玉门店盘点系统</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">  <!-- Google web font "Open Sans" -->
+  <link rel="stylesheet" th:href="@{/static/css/font-awesome.min.css}">
+  <link rel="stylesheet" th:href="@{/static/css/bootstrap.css}">
+  
+  <link rel="stylesheet" th:href="@{/static/css/demo.css}">
+  <link rel="stylesheet" th:href="@{/static/css/templatemo-style.css}">
+  <script type="text/javascript" th:src="@{/static/js/modernizr.custom.86080.js}"></script>
+		
+	</head>
+
+	<body>
+
+			<div id="particles-js"></div>
+		
+			<ul class="cb-slideshow">
+	            <li></li>
+	            <li></li>
+	            <li></li>
+	            <li></li>
+	            <li></li>
+	            <li></li>
+	        </ul>
+
+			<div class="container-fluid">
+				<div class="row cb-slideshow-text-container">
+
+					<div class= "tm-content col-xs-4 ml-auto section"></div>
+
+					<div class= "tm-content col-xs-4 ml-auto section" style="border: 5px solid gray;text-align: center;padding-top: 55px;border-radius: 20px;">
+						<header class="mb-5"><h1>门店盘点系统</h1></header>
+						<P class="mb-5" style="margin-top: 20px;">欢迎登录</P>
+
+						<form action="/toCheck" method="post" class="subscribe-form">
+							<div class="row form-section">
+
+								<div class="col-md-12" style="margin-top: 10px;">
+									  <input name="storeCode" type="text" class="form-control" id="contact_email" placeholder="门店编码" required/>
+								</div>
+
+								<div class="col-md-12" style="margin-top: 10px;">
+									<input name="staffCode" type="text" class="form-control" id="contact_username" placeholder="员工编码" required/>
+								</div>
+
+								<div>
+									<button type="submit" class="tm-btn-subscribe" style="margin-top: 23px;">登录</button>
+								</div>
+
+								<p th:text="${loginInfo}" style="color: #f76132;font-size: 20px;margin-top: 10px;"></p>
+							</div>
+						</form>
+					</div>
+
+					<div class= "tm-content col-xs-4 ml-auto section"></div>
+				</div>	
+				<div class="footer-link">
+					<p>Copyright © 2020 - Design: <a rel="nofollow" href="#" target="_parent">sypm</a></p>
+				</div>
+			</div>	
+	</body>
+
+	<script type="text/javascript" th:src="@{/static/js/particles.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/app.js}"></script>
+</html>

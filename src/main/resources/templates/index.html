@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>漱玉门店盘点系统</title>
+
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/static/css/fileinput.css}">
+    <link rel="stylesheet" th:href="@{/static/css/fileinput-rtl.css}">
+    <script th:src="@{/static/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/static/js/bootstrap.js}"></script>
+    <script th:src="@{/static/js/fileinput.js}"></script>
+    <script th:src="@{/static/js/zh.js}"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">  <!-- Google web font "Open Sans" -->
+    <link rel="stylesheet" th:href="@{/static/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/static/css/demo.css}">
+    <link rel="stylesheet" th:href="@{/static/css/templatemo-style.css}">
+    <script type="text/javascript" th:src="@{/static/js/modernizr.custom.86080.js}"></script>
+
+    <style>
+
+        body {
+
+            background-color: #bdb9b9;
+        }
+
+        .operator_btn {
+
+            width: 100%;
+            height: 100%;
+            font-size: 25px;
+        }
+
+        .container-fluid {
+
+            margin-top: 200px;
+        }
+
+        .col-xs-6 {
+
+            height: 200px;
+        }
+    </style>
+
+    <script>
+
+        $(function () {
+
+            // $('#uploadFile').click(function () {
+            //
+            //     $(window).attr('location',"/index");
+            // });
+
+            $('#downFile').click(function () {
+
+                var storeCode = $("#hiddenStoreCode").val();
+                var staffCode = $("#hiddenStaffCode").val();
+                $(window).attr('location',"/excel?storeCode="+storeCode + "&staffCode=" + staffCode);
+
+                // $.post("/excel",
+                    // {
+                    //     storeCode:$("#hiddenStoreCode").val(),
+                    //     staffCode:$("#hiddenStaffCode").val()
+                    // }
+                    // function(data, status){
+                    //     alert("Data: " + data + " Status: " + status);
+                    // }
+                // );
+                alert("请查收文件");
+            });
+
+            //自定义的文件上传
+            $("#choosUploadFile").fileinput({
+                uploadUrl: "/fileUpload", // 服务器端上传处理程序
+                uploadAsync: true,
+                maxFileCount: 1,
+                showRemove: true,
+                allowedFileExtensions: ['txt', 'xls', 'xlsx'],//接收的文件后缀
+                maxFileSize: 1024,//单位为kb，如果为0表示不限制文件大小
+                //dropZoneEnabled: false//是否显示拖拽区域
+                uploadExtraData:function(){//向后台传递参数
+                    var data={
+                        storeCode:$("#hiddenStoreCode").val(),
+                        staffCode:$("#hiddenStaffCode").val()
+                    };
+                    return data;
+                },
+            }).on("fileuploaded", function(e, data, previewiId, index) {
+
+                console.info("E:" + e);
+                console.info("data:" + data.msg);
+                console.info("previewiId:" + previewiId);
+                console.info("index:" + index);
+            });
+        });
+
+        function initFileInput() {
+
+            $('#choosUploadFile').fileinput({
+                language: 'zh'
+            });
+        }
+        initFileInput();
+    </script>
+</head>
+<body>
+<!--    <div id="particles-js"></div>-->
+
+    <ul class="cb-slideshow">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-6"> <p th:text="'门店编码: ' + ${StoreCode}" id="StoreCode" th:name="StoreCode"/> </div>
+            <div class="col-md-6"> <p th:text="'员工编码: ' + ${StaffCode}" id="StaffCode" th:name="StaffCode"/> </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+
+                <button type="button" class="btn btn-info operator_btn" id="uploadFile" data-toggle="modal" data-target="#myModal">上传</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">上传文件</h4>
+                            </div>
+                            <div class="modal-body">
+                                <label class="control-label">请选择要上传的文件</label>
+                                <input id="choosUploadFile" type="file" class="file-loading" name="uploadfile">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+<!--                                <button type="button" class="btn btn-primary">Save changes</button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-6">
+                <button type="button" class="btn btn-info operator_btn" id="downFile">下载</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <input type="hidden" th:value="${StoreCode}" id="hiddenStoreCode" th:name="hiddenStoreCode">
+            <input type="hidden" th:value="${StaffCode}" id="hiddenStaffCode" th:name="hiddenStaffCode">
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" th:src="@{/static/js/particles.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/app.js}"></script>
+</html>

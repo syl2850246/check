@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sypm.check.mapper.CheckMapper">
+
+    <select id="findAllTeachers" resultType="com.sypm.check.bean.Teacher">
+        select * from teacher
+    </select>
+
+    <select id="findLoginInfoByStoreCodeandStaffCode" parameterType="com.sypm.check.bean.LoginInfoBean" resultType="com.sypm.check.bean.LoginInfoBean">
+        select * from logininfo where storecode = #{storeCode} and staffcode = #{staffCode}
+    </select>
+
+    <insert id="insertUploadFileInfo" parameterType="com.sypm.check.bean.UploadFileBean">
+        insert into ck_uploadFile(
+            uploadStoreCode,
+            uploadStaffCode,
+            uplaodFilePath,
+            uploadFileName,
+            uploadFileTime
+        ) values (
+            #{uploadStoreCode},
+            #{uploadStaffCode},
+            #{uplaodFilePath},
+            #{uploadFileName},
+            #{uploadFileTime}
+        )
+    </insert>
+</mapper>
